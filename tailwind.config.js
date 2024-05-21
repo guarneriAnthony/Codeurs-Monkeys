@@ -79,7 +79,6 @@ module.exports = {
         fontWeight: '400',
       }],
     },
-
     colors: {
       'white': '#FFFFFF',
       'primary': {
@@ -105,6 +104,12 @@ module.exports = {
         DEFAULT: "#1D1D1D",
       }
     },
+    borderRadius:{
+      DEFAULT: '10px',
+      full: "9999px",
+    },
+
+
     extend: {},
   },
   plugins: [],

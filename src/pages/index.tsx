@@ -1,30 +1,46 @@
 import { Seo } from "@/ui/components/seo";
+import { RiAncientGateFill, RiAmazonFill } from "react-icons/ri";
+
 import { Button } from "@/ui/design-system/button/button";
 import { Typography } from "@/ui/design-system/typography/typography";
+
 
 export default function Home() {
   return (
     <>
       <Seo  title="Codeurs Monkeys is now online" description="Codeurs Monkeys 'Description'"/>
+      
 
     <div className="flex items-center gap-4 p-10">
       <Button size="small">Accent</Button>
       <Button size="small" variant="secondary">Secondary</Button>
       <Button size="small" variant="outline">Outline</Button>
       <Button size="small" variant="disabled" disabled>Disabled</Button>
+      <Button size="small" variant="ico" icon={{icon: RiAmazonFill}}/>
     </div>
     <div className="flex items-center gap-4 p-10">
       <Button >Accent</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="disabled" disabled>Disabled</Button>
+      <Button variant="ico" icon={{icon: RiAmazonFill}}/>
     </div>
     <div className="flex items-center gap-4 p-10">
       <Button size="large">Accent</Button>
       <Button size="large" variant="secondary">Secondary</Button>
       <Button size="large" variant="outline">Outline</Button>
       <Button size="large" variant="disabled" disabled>Disabled</Button>
+      <Button size="large" variant="ico" icon={{icon: RiAmazonFill}}/>
+      <Button size="large" icon={{icon: RiAmazonFill}}>lenghtMore</Button>
     </div>
+
+    <div className=" flex items-center gap-4 p-10">
+    <Button size="large" variant="ico" iconTheme="accent" icon={{icon: RiAmazonFill}}/>
+    <Button size="large" variant="ico" iconTheme="secondary" icon={{icon: RiAmazonFill}}/>
+    <Button size="large" variant="ico" iconTheme="gray" icon={{icon: RiAmazonFill}}/>
+    </div>
+    
+
       
 
       {/*
