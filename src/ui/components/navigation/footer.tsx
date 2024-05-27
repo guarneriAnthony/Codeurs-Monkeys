@@ -1,8 +1,16 @@
 import { Typography } from "@/ui/design-system/typography/typography";
 import { Container } from "../container/container";
 import Image from "next/image";
+import { footerApplicationLinks } from "./app-links";
+import { v4 as uuidv4 } from "uuid";
+import { ActiveLink } from "./active-link";
+import Link from "next/link";
+
 export const Footer = () => {
   const curentYear = new Date().getFullYear();
+  const footerNavigationList = footerApplicationLinks.map((element) => (
+    <div key={uuidv4()}>{element.label}</div>
+  ));
 
   return (
     <div className="bg-gray ">
@@ -26,7 +34,7 @@ export const Footer = () => {
             />
           </a>
         </div>
-        <div className="">Liste de liens</div>
+        <div className="">{footerLink()}</div>
       </Container>
       <Container className="pt-9 pb-11 space-y-11">
         <hr className="text-gray-800" />
@@ -45,6 +53,39 @@ export const Footer = () => {
           <div className=""></div>
         </div>
       </Container>
+    </div>
+  );
+};
+
+const footerLink = () => {
+  const linksList = footerApplicationLinks.map((link) => (
+    <div key={uuidv4()}>
+      {link.type === "internal" && (
+        <ActiveLink key={uuidv4()} href={link.baseUrl}>
+          {link.label}
+        </ActiveLink>
+      )}
+      {link.type === "external" && (
+        <a href={link.baseUrl} target="_blank">
+          {link.label}
+        </a>
+      )}
+    </div>
+  ));
+
+  return (
+    <div className="min-w-[190px]">
+      <Typography
+        theme="white"
+        variant="caption2"
+        weight="medium"
+        className="pb-5"
+      >
+        Titre
+      </Typography>
+      <Typography theme="gray" variant="caption3" className="space-y-4">
+        {linksList}
+      </Typography>
     </div>
   );
 };
