@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import React from "react";
 import { Spinner } from "../ spinner/spinner";
+import { IconProps } from "@/types/icon-Props";
+import { LinkType, LinkTypes } from "@/lib/link-type";
+import Link from "next/link";
 
 interface Props {
   size?: "small" | "medium" | "large";
@@ -11,6 +14,9 @@ interface Props {
   disabled?: boolean;
   isLoading?: boolean;
   children?: React.ReactNode;
+  baseUrl?: string;
+  linkType?: LinkType;
+  action?: Function;
 }
 
 export const Button = ({
@@ -22,6 +28,9 @@ export const Button = ({
   disabled,
   isLoading,
   children,
+  baseUrl,
+  linkType = "internal",
+  action = () => {},
 }: Props) => {
   let variantStyle: string = "",
     sizeStyle: string = "",
@@ -53,7 +62,7 @@ export const Button = ({
           "bg-primary-200 hover:bg-primary-300/50 text-primary rounded-full";
       }
       if (iconTheme === "gray") {
-        variantStyle = "bg-gray-700 hover:bg-gray-600 text-white rounded-full";
+        variantStyle = "bg-gray-800 hover:bg-gray-700 text-white rounded-full";
       }
       break;
   }
@@ -85,7 +94,39 @@ export const Button = ({
       break;
   }
 
-  return (
+  const handleClick = () => {
+    if (action) {
+      action();
+    }
+  };
+
+  const buttonContent = (
+    <>
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          {variant === "accent" || variant === "ico" ? (
+            <Spinner size="small" variant="white" />
+          ) : (
+            <Spinner size="small" />
+          )}
+        </div>
+      )}
+
+      <div className={clsx(isLoading && "invisible")}>
+        {icon && variant === "ico" ? (
+          <icon.icon size={icoSize} />
+        ) : (
+          <div className={clsx(icon && "flex items-center gap-1")}>
+            {icon && iconPosition === "left" && <icon.icon size={icoSize} />}
+            {children}
+            {icon && iconPosition === "right" && <icon.icon size={icoSize} />}
+          </div>
+        )}
+      </div>
+    </>
+  );
+
+  const buttonElement = (
     <>
       <button
         type="button"
@@ -96,31 +137,24 @@ export const Button = ({
           isLoading && "cursor-wait",
           "relative animate"
         )}
-        onClick={() => console.log("clicked")}
+        onClick={handleClick}
         disabled={disabled}
       >
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            {variant === "accent" || variant === "ico" ? (
-              <Spinner size="small" variant="white" />
-            ) : (
-              <Spinner size="small" />
-            )}
-          </div>
-        )}
-
-        <div className={clsx(isLoading && "invisible")}>
-          {icon && variant === "ico" ? (
-            <icon.icon size={icoSize} />
-          ) : (
-            <div className={clsx(icon && "flex items-center gap-1")}>
-              {icon && iconPosition === "left" && <icon.icon size={icoSize} />}
-              {children}
-              {icon && iconPosition === "right" && <icon.icon size={icoSize} />}
-            </div>
-          )}
-        </div>
+        {buttonContent}
       </button>
     </>
   );
+
+  if (baseUrl) {
+    if (linkType === LinkTypes.EXTERNAL) {
+      return (
+        <a href={baseUrl} target="_blank">
+          {buttonElement}
+        </a>
+      );
+    } else {
+      return <Link href={baseUrl}>{buttonElement}</Link>;
+    }
+  }
+  return buttonElement;
 };

@@ -1,6 +1,7 @@
 import { AppLinks } from "@/types/app-links"
+import { RiGithubFill, RiLinkedinFill, RiYoutubeFill } from "react-icons/ri";
 
-export const footerApplicationLinks: AppLinks[] = [
+const footerApplicationLinks: AppLinks[] = [
     {
         label: "Acceuil",
         baseUrl: "/",
@@ -66,20 +67,43 @@ const footerInformationLinks: AppLinks[] = [
         type: "internal"
     }
 ];
-const footerSocialNetworksLinks: AppLinks[] = [
+export const footerSocialNetworksLinks: AppLinks[] = [
     {
         label: "Youtuve",
         baseUrl: "https://www.youtube.com/watch?v=7Xu90Fg9Z94&t=1254s",
-        type: "external"
+        type: "external",
+        icon: RiYoutubeFill
     },
     {
         label: "Linkedin",
-        baseUrl: "https://www.youtube.com/watch?v=7Xu90Fg9Z94&t=1254s",
-        type: "external"
+        baseUrl: "https://www.linkedin.com/in/guarneri-anthony/",
+        type: "external",
+        icon: RiLinkedinFill
     },
     {
-        label: "Slack",
-        baseUrl: "https://www.youtube.com/watch?v=7Xu90Fg9Z94&t=1254s",
-        type: "external"
+        label: "GitHub",
+        baseUrl: "https://github.com/guarneriAnthony",
+        type: "external",
+        icon: RiGithubFill
     }
 ];
+
+export const footerLinks = [
+    {
+        label: "App",
+        links: footerApplicationLinks
+    },
+    {
+        label: "Utilisateurs",
+        links: footerUsersLinks
+    },
+    {
+        label: "Informations",
+        links: footerInformationLinks
+    },
+    {
+        label: "Reseaux",
+        links: footerSocialNetworksLinks
+    }
+]
+    

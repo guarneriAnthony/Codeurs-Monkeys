@@ -1,15 +1,18 @@
 import { Typography } from "@/ui/design-system/typography/typography";
-import { Container } from "../container/container";
 import Image from "next/image";
-import { footerApplicationLinks } from "./app-links";
 import { v4 as uuidv4 } from "uuid";
+import { Container } from "../container/container";
+
+import { LinkTypes } from "@/lib/link-type";
+import { FooterLinks } from "@/types/app-links";
 import { ActiveLink } from "./active-link";
-import Link from "next/link";
+import { footerLinks } from "./app-links";
+import { SocialNetworkButtons } from "./social-network-buttons";
 
 export const Footer = () => {
   const curentYear = new Date().getFullYear();
-  const footerNavigationList = footerApplicationLinks.map((element) => (
-    <div key={uuidv4()}>{element.label}</div>
+  const footerNavigationList = footerLinks.map((colomnLinks) => (
+    <FooterLink key={uuidv4()} data={colomnLinks} />
   ));
 
   return (
@@ -34,7 +37,7 @@ export const Footer = () => {
             />
           </a>
         </div>
-        <div className="">{footerLink()}</div>
+        <div className=" flex gap-7">{footerNavigationList}</div>
       </Container>
       <Container className="pt-9 pb-11 space-y-11">
         <hr className="text-gray-800" />
@@ -50,22 +53,27 @@ export const Footer = () => {
             </a>
             {` - SigaCorp SASU`}
           </Typography>
-          <div className=""></div>
+          <div className="">
+            <SocialNetworkButtons theme="gray"  />
+          </div>
         </div>
       </Container>
     </div>
   );
 };
 
-const footerLink = () => {
-  const linksList = footerApplicationLinks.map((link) => (
+interface footerLinkProps {
+  data: FooterLinks;
+}
+const FooterLink = ({ data }: footerLinkProps) => {
+  const linksList = data.links.map((link) => (
     <div key={uuidv4()}>
-      {link.type === "internal" && (
+      {link.type === LinkTypes.INTERNAL && (
         <ActiveLink key={uuidv4()} href={link.baseUrl}>
           {link.label}
         </ActiveLink>
       )}
-      {link.type === "external" && (
+      {link.type === LinkTypes.EXTERNAL && (
         <a href={link.baseUrl} target="_blank">
           {link.label}
         </a>
@@ -81,7 +89,7 @@ const footerLink = () => {
         weight="medium"
         className="pb-5"
       >
-        Titre
+        {data.label}
       </Typography>
       <Typography theme="gray" variant="caption3" className="space-y-4">
         {linksList}
